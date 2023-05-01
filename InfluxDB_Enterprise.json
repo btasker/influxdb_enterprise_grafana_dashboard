@@ -3092,13 +3092,13 @@
     ]
   },
   "time": {
-    "from": "2023-05-01T10:11:47.989Z",
-    "to": "2023-05-01T11:57:27.921Z"
+    "from": "now-12h",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "InfluxDB Enterprise",
   "uid": "fcb5c6ac-0266-44be-90f8-9bf36e42762e",
-  "version": 13,
+  "version": 14,
   "weekStart": ""
 }
