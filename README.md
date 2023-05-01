@@ -31,7 +31,7 @@ The dashboard visualises the following metrics
 
 ### Pre-Requisites
 
-- An InfluxDB Enterprise cluster (some stats will work with OSS)
+- An InfluxDB Enterprise cluster (some stats will also work with OSS)
 - An InfluxDB OSS deployment
 - A Grafana deployment
 
