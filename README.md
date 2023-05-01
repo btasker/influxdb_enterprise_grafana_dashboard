@@ -124,7 +124,7 @@ from(bucket: "telegraf")
 
 Set `Refresh` to `On time range change` and click `Apply`.
 
-Edit each of the dashboard cells to add the following under the measurement on `r._measurement`
+Edit each of the dashboard cells to add the following under the filter on `r._measurement`
 ```
   |> filter(fn: (r) => r.cluster_id == "${cluster_id}")
 ```
