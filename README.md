@@ -81,3 +81,53 @@ Import the dashboard:
 ### Dashboard Variables
 
 The dashboard only exposes a single variable: `bucket`. This defaults to `telegraf`, but allows the source bucket name to be overridden if another was used whilst configuring telegraf.
+
+----
+
+### Monitoring Multiple Clusters
+
+If multiple InfluxDB Enterprise clusters are in use, it's possible to amend the deployed configuration and template to facilitate monitoring of these clusters via a single OSS instance and dashboard.
+
+The Telegraf configuration will need to be amended to add a tag identifying the cluster
+
+```ini
+[global_tags]
+   cluster_id = "prod1"
+```
+
+Telegraf will need to be restarted after adding this.
+
+
+The Dashboard itself then needs to be amended to add a variable
+
+
+1. Browse into the dashboard
+1. Click the settings cog
+1. Choose Variables
+1. Click `New Variable`
+
+Use the following settings
+
+* Variable type: `Query`
+* Name: `cluster_id`
+* Data Source: Your OSS Instance
+
+And set the following query
+```
+from(bucket: "telegraf")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r._measurement == "cpu")
+  |> keyValues(keyColumns: ["cluster_id"])
+  |> group()
+  |> keep(columns: ["_value"])
+```
+
+Set `Refresh` to `On time range change` and click `Apply`.
+
+Edit each of the dashboard cells to add the following under the measurement on `r._measurement`
+```
+  |> filter(fn: (r) => r.cluster_id == "${cluster_id}")
+```
+
+Save the changes.
+
